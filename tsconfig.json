@@ -2,8 +2,9 @@
     "compilerOptions": {
         "target": "ESNext",
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "module": "ES6",
         "noUnusedLocals": true
     },
+    "include": ["src", "__tests__"]
 }
