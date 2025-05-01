@@ -4,7 +4,9 @@
         "outDir": "./dist",
         "rootDir": ".",
         "module": "ES6",
-        "noUnusedLocals": true
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "skipLibCheck": true
     },
     "include": ["src", "__tests__"]
 }
