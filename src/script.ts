@@ -41,8 +41,8 @@ function buildBoxes(): void {
         setTimeout(() => {
 
             // create an array of all the allowed enum types for the box sizes
-            const boxSizesArray: BoxSizes[] = Object.values(BoxSizes).filter(
-                value => typeof value === "number" || value === BoxSizes.BOMB
+            const boxSizesArray = Object.values(BoxSizes).filter(
+                (value): value is BoxSizes => typeof value === "number" || value === BoxSizes.BOMB
             )
             const boxSizesArrayLength = boxSizesArray.length
             // randomly select one size
