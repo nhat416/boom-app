@@ -7,81 +7,82 @@ const button = document.getElementById('generate') as HTMLButtonElement;
 const output = document.getElementsByTagName('output')[0] as HTMLOutputElement;
 
 // add Event Types to our event listeners
-button.addEventListener("click", (e: MouseEvent) => {
-    buildBoxes(); 
-});
+button.addEventListener("click", () => {
+    buildBoxes()
+})
 
-inputField.addEventListener("keydown", (e:KeyboardEvent) => {
-    if(e.key === "Enter") {
-        buildBoxes();
+inputField.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+        buildBoxes()
     }
-});
+})
 
-let boxes: CreateBox<number>[] = [];
+const boxes: CreateBox<number>[] = []
 
 // function to create boxes
-function buildBoxes():void {
+function buildBoxes(): void {
     // grab our input value
-    let boxAmount: number = Number(inputField.value);
+    const boxAmount = Number(inputField.value)
 
     // input validation check
-    if(!boxAmount || boxAmount < 0) {
-        alert("Please insert a positive number");
-        return;
-    };
+    if (!boxAmount || boxAmount < 0) {
+        alert("Please insert a positive number")
+        return
+    }
 
     // start box timer
-    let i = 0; 
+    let i = 0
 
     // start generating boxes
     boxGen();
 
-    function boxGen():void {
+    function boxGen(): void {
         // lag between each box generation
         setTimeout(() => {
 
             // create an array of all the allowed enum types for the box sizes
-            const boxSizesArray: BoxSizes[] = Object.values(BoxSizes).filter(value =>  typeof value === "number" || value === BoxSizes.BOMB
-            );
-            const boxSizesArrayLength: number = boxSizesArray.length; 
+            const boxSizesArray: BoxSizes[] = Object.values(BoxSizes).filter(
+                value => typeof value === "number" || value === BoxSizes.BOMB
+            )
+            const boxSizesArrayLength = boxSizesArray.length
             // randomly select one size
-            let randomNum: number = Math.floor(Math.random() * boxSizesArrayLength);
-            let oneBoxSize: BoxSizes = boxSizesArray[randomNum];
+            const randomNum = Math.floor(Math.random() * boxSizesArrayLength)
+            const oneBoxSize = boxSizesArray[randomNum]
 
             // check if the oneBoxSize is a bomb
-            if(oneBoxSize === BoxSizes.BOMB) {
+            if (oneBoxSize === BoxSizes.BOMB) {
                 // 💣
                 // perform logic for BOMB
-                boxes.forEach((box) => {
-                    box.setColor("red");
+                boxes.forEach(box => {
+                    box.setColor("red")
                     box.element.addEventListener('click', () => {
-                        box.setColor("blue");
-                        console.log('The box ID is public: ', + box.id);
-                    });
-                });
+                        box.setColor("blue")
+                        console.log('The box ID is public: ', +box.id)
+                    })
+                })
                 // css styling and display a dynamic message
-                inputField.disabled = true; 
-                inputField.className = "lost";
-                button.disabled = true; 
-                output.innerHTML = `You lost the game. You managed to produce ${boxes.length} box(s) before blowing up!`;
-                return; 
-            }; // end of BOMB check
+                inputField.disabled = true
+                inputField.className = "lost"
+                button.disabled = true
+                output.innerHTML = `You lost the game. You managed to produce ${boxes.length} box(s) before blowing up!`
+                return
+            } // end of BOMB check
 
             // create a box using the createBox method in our module file, and pass in explicit number type
-            let box = new CreateBox<number>({
+            const box = new CreateBox<number>({
                 id: i,
                 size: oneBoxSize
-            });
+            })
             // increase our counter
-            i++;
+            i++
             // push our newely created box into our global array
-            boxes.push(box);
+            boxes.push(box)
 
             // recursively call the loop if the counter is less than the desired box size generation
-            if(i < boxAmount) {
-                boxGen(); // generate the next box
+            if (i < boxAmount) {
+                boxGen() // generate the next box
             }
-        }, 100);
+        }, 100)
     
-    }; // end boxGen function
-}; // end buildBoxes function
+    } // end boxGen function
+} // end buildBoxes function

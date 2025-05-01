@@ -5,12 +5,12 @@ export enum BoxSizes {
     Medium = 80,
     Large = 120, 
     BOMB = "BOMB"
-};
+}
 
 interface BoxStructure<T> {
     id: number;
     size: T
-};
+}
 // use the syntactic sugar "class" to create a box
 export class CreateBox<T extends string | number> {
     // private properties
@@ -25,9 +25,9 @@ export class CreateBox<T extends string | number> {
         // create box element in HTML
         this.element = document.createElement("div");
         this.initializeBox();
-    };
+    }
 
-    private initializeBox():void {
+    private initializeBox(): void {
         // DOM Work
         this.element.classList.add("box");
         this.element.style.width = `${this.size}px`;
@@ -37,18 +37,18 @@ export class CreateBox<T extends string | number> {
         this.element.style.display = "inline-block";
         // append our div to the DOM
         document.querySelector(".wrapper")?.appendChild(this.element);
-    };  
+    }
 
     // Private method to generate a random color
-    private getRandomColor():string {
-        let red: number = Math.floor(Math.random() * 256);
-        let blue: number = Math.floor(Math.random() * 256);
-        let green: number = Math.floor(Math.random() * 256);
+    private getRandomColor(): string {
+        const red = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
         return `rgb(${red}, ${green}, ${blue})`;
-    };
+    }
 
     // Public method to set the color of the box
-    public setColor(color: string):void {
+    public setColor(color: string): void {
         this.element.style.backgroundColor = color; 
-    };
-}; // end class
+    }
+} // end class
