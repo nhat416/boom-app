@@ -1,5 +1,4 @@
 # Use a multi-stage Dockerfile to build and serve the TypeScript app
-MAINTAINER "Nhat Tran"
 
 # Stage 1: Compile TypeScript sources
 FROM node:18-alpine AS builder
@@ -22,6 +21,7 @@ RUN tsc
 
 # Stage 2: Serve the built files using Nginx
 FROM nginx:alpine
+LABEL maintainer="Nhat Tran"
 
 # Copy compiled assets from the builder stage
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
