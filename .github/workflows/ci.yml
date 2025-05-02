@@ -38,11 +38,3 @@ jobs:
 
       - name: Type-check (no emit)
         run: npx tsc --noEmit
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: |
-            nhat416/boom-app:latest
-            nhat416/boom-app:${{ github.sha }}
