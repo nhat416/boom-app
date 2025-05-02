@@ -1,4 +1,5 @@
 # Use a multi-stage Dockerfile to build and serve the TypeScript app
+MAINTAINER "Nhat Tran"
 
 # Stage 1: Compile TypeScript sources
 FROM node:18-alpine AS builder
