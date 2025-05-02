@@ -1,7 +1,10 @@
 # Use a multi-stage Dockerfile to build and serve the TypeScript app
-
 # Stage 1: Compile TypeScript sources
-FROM node:18-alpine AS builder
+FROM node:18-alpine
+LABEL maintainer="Nhat Tran"
+
+# Install TypeScript compiler globally
+RUN npm install -g typescript serve
 
 # Set working directory
 WORKDIR /app
@@ -10,24 +13,11 @@ WORKDIR /app
 COPY tsconfig.json ./
 COPY src ./src
 
-# Copy existing static assets (HTML, CSS) from the dist folder
-COPY dist ./dist
-
-# Install TypeScript compiler globally
-RUN npm install -g typescript
-
 # Compile the TypeScript project into the dist directory
-RUN tsc
-
-# Stage 2: Serve the built files using Nginx
-FROM nginx:alpine
-LABEL maintainer="Nhat Tran"
-
-# Copy compiled assets from the builder stage
-COPY --from=builder /app/dist/ /usr/share/nginx/html/
+RUN tsc --build
 
 # Expose port 80 for HTTP traffic
-EXPOSE 80
+EXPOSE 3000
 
 # Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "dist"]
